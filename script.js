@@ -21,10 +21,10 @@ const mapper = (key) => {
         const response = await fetch("numbers.txt");
         if (response.status == 200) {
             const readFile = await response.text();
-            document.body.innerHTML = "<h1>Parsed Text on Browser</h1>";
+            // document.body.innerHTML = "";
             const lines = readFile.split("\n");
-            for (let i = 0; i <= lines.length;) {
-                const div = document.createElement("div");
+
+            for (let i = 0; i <= lines.length; i += 3) {
 
                 //parsing line 1
                 let lineArray = lines[i];
@@ -43,6 +43,7 @@ const mapper = (key) => {
 
                 // Creating a number array
                 let actualNumber = [];
+
                 for (let key in arr) {
                     if (
                         lineArray[key] &&
@@ -54,11 +55,12 @@ const mapper = (key) => {
                         actualNumber.push(mapper(number));
                     }
                 }
+
                 //writing it in the html dom
-                div.innerHTML = actualNumber.join("");
-                document.body.appendChild(div);
-                // console.log(lines[i]);
-                i = i + 3;
+                if (!!actualNumber.length) {
+                    readData.innerHTML += actualNumber.join("") + "<br/>";
+                }
+
             }
         }
     } catch (err) {
